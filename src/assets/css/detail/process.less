@@ -1,0 +1,137 @@
+.process{
+	background-color: #fff;
+	ul{
+		padding-left:16px;
+		.bar-row{
+			height:48px;
+			line-height:48px;
+			font-size: 16px;
+			color: #111;
+			padding-right:16px;
+			position: relative;
+			&:after{
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom:0;
+				height: 1px;
+				width: 100%;
+				background-color: #E4E5E6;
+				-webkit-transform: scaleY(0.5);
+				transform: scaleY(0.5);
+			}
+			.prices{
+				display: inline-block;
+				float: right;
+				font-size: 16px;
+				color: #1571E5;
+			}
+			.bar-wrap{
+				display: inline-block;
+				width: calc(~"100% - 148px");
+				height:10px;
+				background-color: #f5f5f5;
+				margin-left:16px;
+				border-radius: 20px;
+				position: relative;
+				.range{
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 10px;
+					z-index: 10;
+					opacity: 0;
+				}
+				.bar-stop{
+					display: inline-block;
+					width: 10px;
+					height:10px;
+					border-radius: 50%;
+					background: #E5E5E5;
+					position: absolute;
+					transform: translateX(-50%);
+					z-index: 1;
+					opacity: .4;
+				}
+				.bar-start{
+					position: relative;
+					height:10px;
+					width: 30%;
+					max-width: 100%;
+					background-color: #1571E5;
+					position: absolute;
+					border-top-left-radius: 20px;
+					border-bottom-left-radius:20px;
+					left:-4px;
+					&:after{
+						content:"";
+						position:absolute;
+						top:50%;
+						transform: translateY(-50%);
+						right:-15px;
+						display:inline-block;
+						width: 10px;
+						height:10px;
+						border-radius: 50%;
+						border:solid 5px #0858BE ;
+					}
+				}
+			}
+		}
+		.row1{
+			.bar-wrap{
+				.bar-stop{
+					&:nth-child(1){
+						left:0%;
+					}
+					&:nth-child(2){
+						left:16.7%;
+					}
+					&:nth-child(3){
+						left:33.4%;
+					}
+					&:nth-child(4){
+						left:50.1%;
+					}
+					&:nth-child(5){
+						left:66.8%;
+					}
+					&:nth-child(6){
+						left:83.5%;
+					}
+					&:nth-child(7){
+						left:100%;
+					}
+				}
+			}
+		}
+		.row2{
+			.bar-wrap{
+				.bar-stop{
+					&:nth-child(1){
+						left:0%;
+					}
+					&:nth-child(2){
+						left:20%;
+					}
+					&:nth-child(3){
+						left:40%;
+					}
+					&:nth-child(4){
+						left:60%;
+					}
+					&:nth-child(5){
+						left:80%;
+					}
+					&:nth-child(6){
+						left:100%;
+					}
+				}
+				.bar-start{
+					width: calc(~"100% - 0px");
+				}
+			}
+		}
+	}
+}
