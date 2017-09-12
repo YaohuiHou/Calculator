@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/assets/award_bg.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/center_bg.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/center_top_bg.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/detail_bg.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/home_bg.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/home_title1.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/home_title2.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/assets/logo.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/award" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/center" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/detail" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/home" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/network" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/submit" charset="UTF-8" />
+  </component>
+</project>
