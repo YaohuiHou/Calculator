@@ -1,24 +1,27 @@
  <template>
     <div class="insurance-vue">
         <titleBar :titleText="titleText"></titleBar>
-        <div class="insurance">
-            <div class="panel">
-    			<ul ref="list">
-                    <li v-for="(item, index) in insuranceObj">
-                        <var @click="safeFun(index)">
-                            <span :class="[ item.safe ? 'check active':'check']"></span>
-                            {{item.name}}
-                        </var>
-                        <div class="price-box" @click="priceFunction(index)">
-                            <i v-if="!item.icon" class="yuan">元</i>
-                            <i v-else class="ico"></i>
-                            <span v-if="!item.input" class="price">{{parseInt(item.price)}}</span>
-                            <input v-else type="tel" class="input-price" placeholder="请输入价格" v-model="item.price" maxlength="8" @input="priceFun(index)"/>
-                            <em v-show="item.needNum != 0">{{item.needNum}}</em>
-                        </div>
-                    </li>
-    			</ul>
-    		</div>
+        <div class="insurance-vue-view">
+            <div class="insurance">
+                <div class="panel">
+        			<ul ref="list">
+                        <li v-for="(item, index) in insuranceObj">
+                            <var @click="safeFun(index)">
+                                <span :class="[ item.safe ? 'check active':'check']"></span>
+                                {{item.name}}
+                            </var>
+                            <div class="price-box" @click="priceFunction(index)">
+                                <i v-if="!item.icon" class="yuan">元</i>
+                                <i v-else class="ico"></i>
+                                <span v-if="!item.input" class="price">{{parseInt(item.price)}}</span>
+                                <input v-else type="tel" class="input-price" placeholder="请输入价格" v-model="item.price" maxlength="8" @input="priceFun(index)"/>
+                                <em v-show="item.needNum != 0">{{item.needNum}}</em>
+                            </div>
+                        </li>
+        			</ul>
+        		</div>
+            </div>
+
         </div>
         <footer>
     		<span class="month-payment"><span class="price">{{ priceNum }}<i>元</i></span></span>
@@ -83,7 +86,7 @@
                         safe: true,
                         name: "第三者责任险",
                         icon: true,
-                        needNum: '',
+                        needNum: '五万元',
                         input: false,
                         price: 0,
                         id: ''
@@ -101,7 +104,7 @@
                         safe: true,
                         name: "全车抢盗险",
                         icon: true,
-                        needNum: 0,
+                        needNum: '五万元',
                         input: false,
                         price: 0,
                         id: ''
@@ -445,7 +448,16 @@
 
 <style lang="less" scoped>
     .insurance-vue{
+        height: 100%;
+        overflow: hidden;
+    }
+    .insurance-vue-view{
+        height: calc(100vh);
         padding-top: 44px;
         padding-bottom: 56px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 </style>

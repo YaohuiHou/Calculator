@@ -1,41 +1,42 @@
 <template>
-    <div class="detail" :style="[ totalShow ? styleObjeat : '']">
+    <div class="detail">
         <titleBar :titleText="titleText"></titleBar>
-        <!-- tab -->
-        <detailTab :fullPayment="fullPayment" :loansMonthPayment="loansMonthPayment" :loantype="loantype" :subtabShow="subtabShow" :loansPayment="loansPayment" v-on:subtabLoan="subtabLoanFun" v-on:equalShow="equalShowFun"></detailTab>
-        <detailData :priceDataObject="priceDataObject" :carPrice='carPrice' :subtabShow="subtabShow" :taxPrice="taxPrice" :incidentalPrice="incidentalPrice" :insurancePrice="insurancePrice"></detailData>
+        <div class="detail-view" :style="[ totalShow ? styleObjeat : '']">
+            <!-- tab -->
+            <detailTab :fullPayment="fullPayment" :loansMonthPayment="loansMonthPayment" :loantype="loantype" :subtabShow="subtabShow" :loansPayment="loansPayment" v-on:subtabLoan="subtabLoanFun" v-on:equalShow="equalShowFun"></detailTab>
+            <detailData :priceDataObject="priceDataObject" :carPrice='carPrice' :subtabShow="subtabShow" :taxPrice="taxPrice" :incidentalPrice="incidentalPrice" :insurancePrice="insurancePrice"></detailData>
 
-        <!-- 等额本金 -->
-        <div class="equal-view" v-show="subtabShow">
-            <detailCheck v-on:checkValue="checkFun"></detailCheck>
-            <!-- <detailWay></detailWay> -->
-            <detailProcess v-on:loanObjeact="loanFun"></detailProcess>
+            <!-- 等额本金 -->
+            <div class="equal-view" v-show="subtabShow">
+                <detailCheck v-on:checkValue="checkFun"></detailCheck>
+                <!-- <detailWay></detailWay> -->
+                <detailProcess v-on:loanObjeact="loanFun"></detailProcess>
+            </div>
+
+            <!-- 车型 价格筛选 -->
+            <FillList v-on:brand="brandshow" :brandText="brandText" :headstockValue="headstockValue" :affiliatedValue="affiliatedValue" v-on:inputValue="formEleOption"></FillList>
+            <!-- 保险 -->
+            <router-link to="/Insurance">
+                <detailItem :insurancePrice="insurancePrice"></detailItem>
+            </router-link>
+            <!-- 税 -->
+            <detailTax :taxPrice="taxPrice" :taxObject="taxObject"></detailTax>
+            <!-- 杂费 -->
+            <insurance :incidentalPrice="incidentalPrice" :incidentalObject="incidentalObject" v-on:insuranceOptions="insuranceFun"></insurance>
         </div>
-
-        <!-- 车型 价格筛选 -->
-        <FillList v-on:brand="brandshow" :brandText="brandText" :headstockValue="headstockValue" :affiliatedValue="affiliatedValue" v-on:inputValue="formEleOption"></FillList>
-        <!-- 保险 -->
-        <router-link to="/Insurance">
-            <detailItem :insurancePrice="insurancePrice"></detailItem>
-        </router-link>
-        <!-- 税 -->
-        <detailTax :taxPrice="taxPrice" :taxObject="taxObject"></detailTax>
-        <!-- 杂费 -->
-        <insurance :incidentalPrice="incidentalPrice" :incidentalObject="incidentalObject" v-on:insuranceOptions="insuranceFun"></insurance>
         <!-- 弹层 -->
-		<div class="popups" v-show="popupsShow">
-			<!-- 遮罩层 -->
-			<div class="mask" @click="popupsFun"></div>
-			<!-- 弹层内容 -->
-			<div class="popcontainer">
+        <div class="popups" v-show="popupsShow">
+            <!-- 遮罩层 -->
+            <div class="mask" @click="popupsFun"></div>
+            <!-- 弹层内容 -->
+            <div class="popcontainer">
                 <headerPop :titlePop="titlePop" :superior="superior" v-on:headClose="popupsFun" v-on:backPar="backSuperior"></headerPop>
                 <brandsPop v-on:brandId="brandsFun" v-show="brandsShow" :brandList="brandList"></brandsPop>
                 <seriesPop :series="series" :seriesList="seriesList" v-on:seriesId="seriesFun"></seriesPop>
                 <vechilePop :vechile="vechile" :vechileList="vechileList" v-on:vechileOption="vechileFun"></vechilePop>
                 <equalPop v-show="equal" :equalList="equalList" :principalTotal="principalTotal" :interestTotal="interestTotal"></equalPop>
-			</div>
-		</div>
-
+            </div>
+        </div>
         <!-- footer -->
         <detailFooter :totalPayment='totalPayment' :totalShow='totalShow'></detailFooter>
         <Loading v-show="loadingShow"></Loading>
@@ -93,7 +94,9 @@
                 formValue: {                // 提交信息
                     productid:'',           // 车型id
                     carprice:'',            // 裸车价格
-                    urlcode:''
+                    urlcode:'',
+                    safe_dsz: 1,
+                    safe_dqx: 1
                 },
                 carDataLocal: {},           // Local修改数据
                 PriceObj:{},
@@ -146,7 +149,8 @@
                 loansMonthPayment:0,
                 loadingShow: false,
                 interestTotal:0,
-                principalTotal: 0
+                principalTotal: 0,
+                loansPayInterest:0,         // 总利息
             }
         },
         created () {
@@ -155,6 +159,8 @@
             if(this.$route && this.$route.query){
                 this.formValue = this.$route.query
             }
+            this.formValue.safe_dsz = 1
+            this.formValue.safe_dqx = 1
 
             // home 通信
             var carData = localStorage.getItem('CARVALUE');
@@ -177,9 +183,10 @@
             me.getTotal()
         },
         methods:{
-            getTotal() {
+            getTotal() {            // 计算总数 请求数据
                 var me = this;
                 // 获取数据
+                console.log(me.formValue);
                 utils.getTotalData(function(res){
                     if( res.status == 200){
                         var data = res.data;
@@ -196,11 +203,10 @@
                             me.updata = true;
                             // 车上人员责任险金额
                             me.liabilityInCar = body.safetotal.safe_chrz
-                            // set图标中的数据
-                            // me.$set(me.priceDataObject,"carPrice",me.carPrice)
-                            // me.$set(me.priceDataObject,"incidentalPrice",me.incidentalPrice)
-                            // me.$set(me.priceDataObject,"insurancePrice",me.insurancePrice)
-                            // me.$set(me.priceDataObject,"taxPrice",me.taxPrice)
+
+                            // 总成本计算
+                            me.totalPayment = me.loansPayInterest + me.fullPayment
+
                             // 保险obj
                             var insuranceData = localStorage.getItem('INSURANCEpriceDATA');
                             insuranceData && localStorage.removeItem('INSURANCEpriceDATA');
@@ -234,8 +240,8 @@
                           'isv': 0,
                           'safe_chrz': me.liabilityInCar,       // 车上人员责任险金额
                           'incidental': me.incidentalPrice,     // 杂费
-                          'safe_dsz': '',       // 第三者责任险主键id
-                          'safe_dqx': '',       // 盗抢险主键id
+                          'safe_dsz': '1',       // 第三者责任险主键id
+                          'safe_dqx': '1',       // 盗抢险主键id
                           'safe_blp': '',       // 玻璃破碎险主键id
                           'safe_ryw': '',       // 人身意外险主键id
                       }
@@ -299,9 +305,9 @@
                     }
                 })
                 if(this.popupsShow){
-                    document.querySelector('body').style.overflow = 'hidden'
+                    document.querySelector('.detail-view').style.overflow = 'hidden'
                 }else{
-                    document.querySelector('body').style.overflow = 'scroll'
+                    document.querySelector('.detail-view').style.overflow = 'scroll'
                 }
             },
             checkFun (o) {           // 等额本金 & 本息
@@ -390,8 +396,9 @@
                         if( res.status == 200){
                             var data = res.data;
                             if(data.state == 1){
-                                // me.loansPayment = parseInt(data.body.interest)
-                                me.totalPayment = parseInt(data.body.interest) + me.loansPayment
+                                me.loansPayInterest = parseInt(data.body.interest)
+                                // me.totalPayment = me.loansPayInterest + me.loansPayment
+                                me.totalPayment = me.loansPayInterest + me.fullPayment
                             }
                         }
                     },dataObj);
@@ -410,9 +417,9 @@
                 // this.vechile = false
 
                 if(this.popupsShow){
-                    document.querySelector('body').style.overflow = 'hidden'
+                    document.querySelector('.detail-view').style.overflow = 'hidden'
                 }else{
-                    document.querySelector('body').style.overflow = 'scroll'
+                    document.querySelector('.detail-view').style.overflow = 'scroll'
                 }
             },
             brandsFun (o) {          // 品牌筛选车系
@@ -494,8 +501,15 @@
 
 <style scoped>
     .detail{
-        position: relative;
+        height: 100%;
         overflow: hidden;
-        padding-top:44px;
+    }
+    .detail-view{
+        height: calc(100vh);
+        padding-top: 44px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 </style>

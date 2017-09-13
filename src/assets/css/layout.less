@@ -56,7 +56,14 @@ input::-webkit-search-decoration, input::-webkit-search-cancel-button {
   url('//at.alicdn.com/t/font_393543_gqnnuh9w0msu4n29.svg#iconfont') format('svg');
 }
 body,html{height: 100%;}
-body{background: #F3F4F5;}
+body{background: #F3F4F5;overflow: hidden;}
+.app{
+    position: relative;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1;
+}
 .clearfix:after{content:"."; display: block; visibility: hidden; clear: both; height:0; font-size:0}
 .popups{
 	position: fixed;

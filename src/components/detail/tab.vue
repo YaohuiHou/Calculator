@@ -1,8 +1,8 @@
 <template>
 	<div class="tab">
 		<ul class="maintab clearfix">
-			<li :class="[ !subtabShow ? 'active':'']" @click="subtabFun">全款买车</li>
-			<li :class="[ subtabShow ? 'active buy':'buy']" @click="subtabFun">贷款买车</li>
+			<li :class="[ subtabArr[0].class ? 'active':'']" @click="subtabFun(0)">全款买车</li>
+			<li :class="[ subtabArr[1].class ? 'active buy':'buy']" @click="subtabFun(1)">贷款买车</li>
 		</ul>
 		<div class="total">
 			<span class="info">全款总价（以实际到店为准）</span>
@@ -29,16 +29,30 @@
 		props: ['fullPayment','loansPayment','loantype','subtabShow','loansMonthPayment'],
 		data () {
 			return {
+				subtabArr:[
+					{
+						name: '全款买车',
+						class: true
+					},
+					{
+						name: '贷款买车',
+						class: false
+					}
+				]
 			}
 		},
 		created () {
 		},
 		methods: {
-			subtabFun () {
+			subtabFun (i) {
 				var me = this;
-				me.subtabShow = !me.subtabShow
+				this.subtabArr.forEach(function(e){
+					e.class = false
+				});
+				this.subtabArr[i].class = true
+				// me.subtabShow = !me.subtabShow
 				this.$emit('subtabLoan',{
-		            judge: me.subtabShow,
+		            judge: i,
 		        });
 			},
 			Schedule () {

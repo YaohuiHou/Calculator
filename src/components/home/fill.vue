@@ -5,11 +5,11 @@
 			车型
 		</li>
 		<li>
-			<span class="input-txt"><input type="tel" placeholder="请输入" maxlength="8" @input="inputFun" v-model="headstock" />元</span>
+			<span class="input-txt"><input type="tel" placeholder="请输入" maxlength="7" @input="inputFun" v-model="headstock" />元</span>
 			裸车车头价格
 		</li>
 		<li>
-			<span class="input-txt"><input type="tel" placeholder="请输入" maxlength="8" @input="inputFun" v-model="affiliated" />元</span>
+			<span class="input-txt"><input type="tel" placeholder="请输入" maxlength="7" @input="inputFun" v-model="affiliated" />元</span>
 			裸车挂车价格
 		</li>
 	</ul>
