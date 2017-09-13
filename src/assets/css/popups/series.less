@@ -1,0 +1,56 @@
+.series-list{
+	overflow: hidden;
+	> header{
+		color:#999 ;
+		font-size: 14px;
+		padding-left: 16px;
+		line-height: 30px;
+		background-color: #F3F4F5;
+		border-top: 1px solid #e7e8e9;
+		border-bottom: 1px solid #e7e8e9;
+	}
+	ul{
+		padding-left:16px;
+		background: #fff;
+		li {
+			position: relative;
+			padding-left:2px;
+			color:#333;
+			height: 48px;
+			line-height: 48px;
+			display: block;
+			overflow: hidden;
+			&:after{
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom:0;
+				height: 1px;
+				width: 100%;
+				background-color: #E4E5E6;
+				-webkit-transform: scaleY(0.5);
+				transform: scaleY(0.5);
+			}
+			&:last-of-type:after{
+				display: none;
+			}
+			&.active{
+				position: relative;
+				color: #1571E5;
+				&:before{
+					vertical-align:middle;
+					content:"\4e2d";
+					font-family: 'account';
+					width:16px ;
+					height:12px;
+					line-height: 12px;
+					font-size: 12px;
+					position: absolute;
+					right:20px;
+					top:50%;
+					margin-top:-6px;
+				}
+			}
+		}
+	}
+}

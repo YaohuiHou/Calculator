@@ -1,0 +1,119 @@
+.insurance{
+	background:#fff;
+	.panel{
+		width: 100%;
+		max-height: calc(~"100%vh");
+		overflow-y: auto;
+		ul{
+			padding-left: 16px;
+			li{
+				height: 48px;
+				line-height:48px;
+				position: relative;
+				font-size: 16px;
+				color: #17181A;
+				padding-left: 26px;
+				padding-right: 16px;
+				position: relative;
+				&:after{
+					content: '';
+					position: absolute;
+					left: 0;
+					bottom:0;
+					height: 1px;
+					width: 100%;
+					background-color: #E4E5E6;
+					-webkit-transform: scaleY(0.5);
+					transform: scaleY(0.5);
+				}
+				var{
+					position: relative;
+					display: inline-block;
+					min-width: 130px;
+					.check{
+						left: -26px;
+					}
+				}
+				.check{
+					position: absolute;
+					top:16px;
+					left:0;
+					width:18px;
+					height:18px;
+					background:#d3d3d3;
+					color: #fff;
+					border-radius: 50%;
+					z-index: 1;
+					&:before{
+						content:"\4e2d";
+						font-family:'account';
+						width:18px;
+						height:18px;
+						line-height: 18px;
+						font-size: 10px;
+						text-align: center;
+						color: #fff;
+						z-index: 99;
+						position: absolute;
+						top:0;
+						left:0;
+					}
+					&.active{
+						background: #0082F4;
+					}
+				}
+				.price-box{
+					float: right;
+					width: calc(~"100% - 130px");
+				}
+				.price{
+					display: inline-block;
+					float: right;
+					color: #333333;
+					font-size: 18px;
+					margin-right:8px;
+					text-align: right;
+				}
+				.input-price{
+					height:48px;
+					line-height: 48px;
+					float: right;
+					text-align: right;
+					padding-right:8px;
+					width: calc(~"100% - 20px");
+				}
+				em{
+					float: right;
+					display: inline-block;
+					font-size: 12px;
+					color: #FF6600;
+					margin-right:8px;
+				}
+				i{
+					display: inline-block;
+					float: right;
+					font-size: 12px;
+					color: #A1A9B3;
+				}
+				.ico:after{
+					display:inline-block;
+					content:"\53f3";
+					font-family: 'account';
+					width:7px;
+					height:12px;
+					line-height: 12px;
+					font-size: 12px;
+					color: #8A9199;
+					padding:0 4px 0 3px;
+				}
+				&:last-child{
+					position: relative;
+					&:after{
+						height: 0;
+						width: 0;
+					}
+				}
+			}
+		}
+	}
+}

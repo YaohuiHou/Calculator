@@ -1,0 +1,37 @@
+footer{
+	position: fixed;
+	left: 0;
+	bottom:0;
+	width: 100%;
+	padding: 0 16px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	height: 48px;
+	line-height: 48px;
+	background-color: #fff;
+	z-index: 5;
+	border-top: 1px solid #eee;
+	.month-payment{
+		float: right;
+		.price{
+			color: #f60;
+			font-size: 18px;
+			font-weight: bold;
+			margin-left: 3px;
+			i{
+				font-size: 14px;
+			}
+		}
+	}
+	&:after {content:"."; display: block; visibility: hidden; clear: both; height:0; font-size:0}
+	.total{
+		color: #f60;
+		font-size: 18px;
+		font-weight: bold;
+		margin-left: 3px;
+		i{
+			font-size: 12px;
+			color: #f60;
+		}
+	}
+}
