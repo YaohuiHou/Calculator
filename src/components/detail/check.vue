@@ -9,7 +9,10 @@
 
 <script>
 	export default {
+<<<<<<< HEAD
 		props: ['loantypeProp'],
+=======
+>>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 		data () {
 			return {
 				subtabShow: false,
@@ -24,8 +27,11 @@
 			}
 		},
 		created () {
+<<<<<<< HEAD
 			this.subtabArr[0].class = !this.loantypeProp
 			this.subtabArr[1].class = this.loantypeProp
+=======
+>>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 		},
 		methods: {
 			subtabFun (i) {

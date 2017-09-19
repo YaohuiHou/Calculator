@@ -42,8 +42,11 @@
 			}
 		},
 		created () {
+<<<<<<< HEAD
 			this.subtabArr[0].class = !this.subtabShow
 			this.subtabArr[1].class = this.subtabShow
+=======
+>>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 		},
 		methods: {
 			subtabFun (i) {

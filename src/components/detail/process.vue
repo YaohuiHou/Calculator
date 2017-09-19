@@ -34,7 +34,10 @@
 </template>
 <script>
 	export default {
+<<<<<<< HEAD
 		props: ['loanratioProp','loanmonthsProp'],
+=======
+>>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 		data () {
 			return {
 				loanratio: 50.1,
@@ -46,6 +49,7 @@
 				monthsIndex: 5
 			}
 		},
+<<<<<<< HEAD
 		created () {
 			var me = this
 			this.loanratio = this.loanratioProp
@@ -53,6 +57,8 @@
 			me.ratioIndex = parseInt(me.loanratio/16.6)
 			me.monthsIndex = parseInt(me.loanmonths/20)
 		},
+=======
+>>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 		methods: {
 			rangeFun (i) { 		// 拖动
 				var me = this
@@ -68,8 +74,11 @@
 				this.$emit('loanObjeact',{
 					ratio: me.ratioNumArr[me.ratioIndex],
 		            months: me.monthsArr[me.monthsIndex],
+<<<<<<< HEAD
 					loanratio: me.loanratio,
 					loanmonths: me.loanmonths
+=======
+>>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 		        });
 			}
 		}
