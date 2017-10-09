@@ -30,11 +30,6 @@
             }
         },
         created () {
-<<<<<<< HEAD
-            console.log( this.seriesList.data );
-=======
-            
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
         },
         methods: {
             seriesSelected (sId,subCateId) {        // 车系参数

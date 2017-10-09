@@ -1,13 +1,8 @@
 <template>
-    <div class="home">
-        <titleBar :titleText="titleText"></titleBar>
-<<<<<<< HEAD
+    <div class="home" v-bind:style="[titleBarShow ? styleObjs : '']">
+        <titleBar :titleText="titleText" v-on:titleShow="titleShowFun"></titleBar>
         <div class="prompts">请选择车型并输入价格</div>
         <FillList v-on:brand="brandshow" :isVehicle="isVehicle" :brandText="brandText"  :headstockValue="headstockValue" :affiliatedValue="affiliatedValue" v-on:inputValue="formEleOption"></FillList>
-=======
-        <div class="prompts">请选择车型或输入价格</div>
-        <FillList v-on:brand="brandshow" :brandText="brandText"  :headstockValue="headstockValue" :affiliatedValue="affiliatedValue" v-on:inputValue="formEleOption"></FillList>
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
         <!-- 完成后加 pitch -->
         <div class="button" :class="[buttonPitch ? 'pitch' : '']" @click="financial">计算</div>
 
@@ -72,12 +67,12 @@
                     carprice:'',            // 裸车价格
                     urlcode:''
                 },
-<<<<<<< HEAD
                 loadingShow: false,
-                isVehicle: true             // 挂车输入框
-=======
-                loadingShow: false
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
+                isVehicle: true,             // 挂车输入框
+                titleBarShow: false,        // titleBar
+                styleObjs: {
+                    'paddingTop': 0
+                }
             }
         },
         created () {
@@ -95,6 +90,9 @@
             })
         },
         methods:{
+            titleShowFun (o) {
+                this.titleBarShow = true;
+            },
             brandshow (o) {      // 品牌展示
                 var me = this;
                 this.loadingShow = true
@@ -161,10 +159,7 @@
                 this.popupsShow = o.judge
                 // id
                 this.formValue.productid = o.id
-<<<<<<< HEAD
                 this.isVehicle = o.isVehicle
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
             },
             backSuperior (o) {      //返回上一级
                 var me = this;
@@ -182,16 +177,9 @@
             formEleOption (o) {    // 获取用户填写内容
                 var me = this
                 me.headstockValue = o.headstock == '' ? 0:o.headstock
-<<<<<<< HEAD
                 me.affiliatedValue = this.isVehicle ? o.affiliated : ''
                 me.formValue.carprice = parseInt(me.headstockValue) + parseInt(o.affiliated == '' ? 0:o.affiliated)
                 me.PriceObj = o;
-=======
-                me.affiliatedValue = o.affiliated == '' ? 0:o.affiliated
-                me.formValue.carprice = parseInt(me.headstockValue) + parseInt(me.affiliatedValue)
-                me.PriceObj = o;
-
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 // 按钮颜色
                 if(me.formValue.carprice > 0 && me.formValue.productid != ''){
                     me.buttonPitch = true
@@ -203,22 +191,14 @@
                 var me = this;
                 var carData = localStorage.getItem('CARVALUE');
                 carData && localStorage.removeItem('carData');
-<<<<<<< HEAD
                 me.affiliatedValue = this.isVehicle ? me.affiliatedValue : ''
-                console.log( me.isVehicle );
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 try {
                   var CarData = {
                       'brandText': me.brandText,
                       'Urlcode' : me.formValue.urlcode,
                       'headstockValue': me.headstockValue,
-<<<<<<< HEAD
                       'affiliatedValue': me.affiliatedValue,
                       'isVehicle': me.isVehicle
-=======
-                      'affiliatedValue': me.affiliatedValue
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                   }
                   localStorage.setItem('CARVALUE',JSON.stringify(CarData));
                 } catch(e){};
@@ -236,10 +216,7 @@
                     var insuranceData = localStorage.getItem('INSURANCEpriceDATA');
                     var insuranceObj = localStorage.getItem('IncidentalOBJ');
                     var insurance = localStorage.getItem('CalculatioN');
-<<<<<<< HEAD
                     var subtabLoan = localStorage.getItem('SUBTABloan');
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                     if(insuranceData){
                         localStorage.removeItem('INSURANCEpriceDATA');
                     }
@@ -249,12 +226,9 @@
                     if(insurance){
                         localStorage.removeItem('CalculatioN');
                     }
-<<<<<<< HEAD
                     if(subtabLoan){
                         localStorage.removeItem('SUBTABloan');
                     }
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                     me.cacheData()
                     me.$router.push({ path: '/Detail', query: me.formValue})
                 }

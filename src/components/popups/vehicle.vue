@@ -31,12 +31,8 @@
 				this.$emit('vechileOption',{
 					judge: false,
 					name: item.name,
-<<<<<<< HEAD
 					id: item.id,
 					isVehicle: item.isVehicle ? item.isVehicle : 0
-=======
-					id: item.id
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 				})
 			}
 		}

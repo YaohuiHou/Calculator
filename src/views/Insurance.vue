@@ -1,7 +1,7 @@
  <template>
     <div class="insurance-vue">
-        <titleBar :titleText="titleText"></titleBar>
-        <div class="insurance-vue-view">
+        <titleBar :titleText="titleText" v-on:titleShow="titleShowFun"></titleBar>
+        <div class="insurance-vue-view" v-bind:style="[titleBarShow ? styleObjs : '']">
             <div class="insurance">
                 <div class="panel">
         			<ul ref="list">
@@ -182,6 +182,10 @@
                 stolen: false,              // 抢盗险
                 stolenList: {},
                 Strong: false,              // 强险
+                titleBarShow: false,        // titleBar
+                styleObjs: {
+                    'paddingTop': 0
+                }
             }
         },
         created () {
@@ -227,6 +231,9 @@
             this.Calculation(me.insuranceObj);
         },
         methods: {
+            titleShowFun (o) {
+                this.titleBarShow = true;
+            },
             safeFun (i) {            // 点击事件
                 var me = this
                 this.insuranceObj[i].safe = !this.insuranceObj[i].safe

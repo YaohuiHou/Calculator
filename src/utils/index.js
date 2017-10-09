@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Interval from 'real-interval'
 const COOKIE = document.cookie
-const BASEURL = 'https://saasm.360che.com.cn/carprice/' 		// 计算接口
+const BASEURL = 'https://tools.360che.com/carprice/' 		// 计算接口
 const BBSCAR = 'https://product.360che.com/index.php?r=api/'	// 产品库车型
 
 

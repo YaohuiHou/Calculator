@@ -1,14 +1,13 @@
 <template>
     <div class="detail">
-        <titleBar :titleText="titleText"></titleBar>
-        <div class="detail-view" :style="[ totalShow ? styleObjeat : '']">
+        <titleBar :titleText="titleText" v-on:titleShow="titleShowFun"></titleBar>
+        <div class="detail-view" v-bind:style="[titleBarShow ? styleObjs : '',totalShow ? styleObjeat : '']">
             <!-- tab -->
             <detailTab :fullPayment="fullPayment" :loansMonthPayment="loansMonthPayment" :loantype="loantype" :subtabShow="subtabShow" :loansPayment="loansPayment" v-on:subtabLoan="subtabLoanFun" v-on:equalShow="equalShowFun"></detailTab>
             <detailData :priceDataObject="priceDataObject" :carPrice='carPrice' :subtabShow="subtabShow" :taxPrice="taxPrice" :incidentalPrice="incidentalPrice" :insurancePrice="insurancePrice"></detailData>
 
             <!-- 等额本金 -->
             <div class="equal-view" v-show="subtabShow">
-<<<<<<< HEAD
                 <detailCheck v-on:checkValue="checkFun" :loantypeProp="loantypeProp"></detailCheck>
                 <!-- <detailWay></detailWay> -->
                 <detailProcess v-on:loanObjeact="loanFun" :loanratioProp="loanratioProp" :loanmonthsProp="loanmonthsProp"></detailProcess>
@@ -16,15 +15,6 @@
 
             <!-- 车型 价格筛选 -->
             <FillList v-on:brand="brandshow" :isVehicle="isVehicle" :brandText="brandText" :headstockValue="headstockValue" :affiliatedValue="affiliatedValue" v-on:inputValue="formEleOption"></FillList>
-=======
-                <detailCheck v-on:checkValue="checkFun"></detailCheck>
-                <!-- <detailWay></detailWay> -->
-                <detailProcess v-on:loanObjeact="loanFun"></detailProcess>
-            </div>
-
-            <!-- 车型 价格筛选 -->
-            <FillList v-on:brand="brandshow" :brandText="brandText" :headstockValue="headstockValue" :affiliatedValue="affiliatedValue" v-on:inputValue="formEleOption"></FillList>
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
             <!-- 保险 -->
             <router-link to="/Insurance">
                 <detailItem :insurancePrice="insurancePrice"></detailItem>
@@ -161,13 +151,16 @@
                 interestTotal:0,
                 principalTotal: 0,
                 loansPayInterest:0,         // 总利息
-<<<<<<< HEAD
                 isVehicle: true,             // 挂车输入框
                 loanratioProp: 50.1,        // 进度条
 				loanmonthsProp: 100,
-                loantypeProp: 0             // 缓存等额本金本息记录
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
+                loantypeProp: 0,             // 缓存等额本金本息记录
+                titleBarShow: false,        // titleBar
+                styleObjs: {
+                    'paddingTop': 0
+                },
+                ratioNumArr: [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6],
+				monthsArr: ['6','12','18','24','30','36'],
             }
         },
         created () {
@@ -183,19 +176,12 @@
             var carData = localStorage.getItem('CARVALUE');
             if(carData){
                 carData = me.carDataLocal = JSON.parse( carData );
-<<<<<<< HEAD
                 me.isVehicle = carData.isVehicle
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 me.brandText = carData.brandText
                 me.headstockValue = carData.headstockValue
                 me.affiliatedValue = carData.affiliatedValue
                 me.formValue.urlcode = carData.Urlcode == undefined ? me.$route.query.urlcode : carData.Urlcode
-<<<<<<< HEAD
                 me.formValue.carprice = parseInt(me.headstockValue) + parseInt(me.affiliatedValue == '' ? 0 : me.affiliatedValue)
-=======
-                me.formValue.carprice = parseInt(carData.headstockValue) + parseInt(carData.affiliatedValue)
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 // 读取保险缓存数据
                 if(carData.everData){
                     me.incidentalPrice = carData.everData.incidental
@@ -203,7 +189,6 @@
                         me.formValue[key] = carData.everData[key]
                     }
                 }
-<<<<<<< HEAD
                 // 默认加第三责任险
                 this.formValue.safe_dsz = this.formValue.safe_dsz == '' ? 1 : this.formValue.safe_dsz
                 this.formValue.safe_dqx = this.formValue.safe_dqx == '' ? 1 : this.formValue.safe_dqx
@@ -236,22 +221,20 @@
                     me.loanratioProp = subtabLoan.loanratioProp
     				me.loanmonthsProp = subtabLoan.loanmonthsProp
                     me.loantypeProp = subtabLoan.loantypeProp
+
+                    // 百分百：
+                    me.loanratio = me.ratioNumArr[ parseInt( subtabLoan.loanratioProp/16.6) ]
+                    me.loanmonths = me.monthsArr[ parseInt( subtabLoan.loanmonthsProp/20) ]
                 }
             }
-=======
-             }
-            // 获取数据
-            me.getTotal()
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
         },
         methods:{
+            titleShowFun (o) {
+                this.titleBarShow = true;
+            },
             getTotal() {            // 计算总数 请求数据
                 var me = this;
                 // 获取数据
-<<<<<<< HEAD
-=======
-                console.log(me.formValue);
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 utils.getTotalData(function(res){
                     if( res.status == 200){
                         var data = res.data;
@@ -295,20 +278,14 @@
                 // 跳转保险页的时候缓存所得数据
                 var carData = localStorage.getItem('CARVALUE');
                 carData && localStorage.removeItem('carData');
-<<<<<<< HEAD
                 me.affiliatedValue = this.isVehicle ? me.affiliatedValue : ""
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 try {
                   var CarData = {
                       'brandText': me.brandText,
                       'headstockValue': me.headstockValue,
                       'affiliatedValue': me.affiliatedValue,
                       'Urlcode' : me.formValue.urlcode,
-<<<<<<< HEAD
                       'isVehicle': me.isVehicle,
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                       'everData':{
                           'isv': 0,
                           'safe_chrz': me.liabilityInCar,       // 车上人员责任险金额
@@ -386,11 +363,8 @@
             checkFun (o) {           // 等额本金 & 本息
                 var me = this
                 me.loantype = o.id
-<<<<<<< HEAD
 
                 me.loantypeProp = o.id
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 // 实时计算贷款
                 if(me.subtabShow){
                     this.subtabLoanFun({'judge':true})
@@ -424,11 +398,8 @@
                     'loanmoney': me.loansPayment,       //贷款金额
                     'loantype': me.loantype,            //还款方式
                     'loanmonths': me.loanmonths,        //还款月数
-<<<<<<< HEAD
                     'safe_dsz': me.formValue.safe_dsz,
                     'safe_dqx': me.formValue.safe_dqx
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 }
                 utils.getRepayData(function(res){
                     if( res.status == 200){
@@ -446,6 +417,8 @@
             },
             Total (o){
 				var me = this;
+                me.principalTotal = 0
+                me.interestTotal = 0
 				o.forEach(function(e,i){
 					me.principalTotal += parseInt(e.principal)
 					me.interestTotal += parseInt(e.interest)
@@ -456,33 +429,31 @@
                 this.loanratio = o.ratio
                 // 还款月数
                 this.loanmonths = o.months
-<<<<<<< HEAD
 
                 this.loanratioProp = o.loanratio
                 this.loanmonthsProp = o.loanmonths
 
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                 // 实时计算贷款
                 if(this.subtabShow){
                     this.subtabLoanFun({'judge':true})
                 }
             },
-<<<<<<< HEAD
             subtabLoanFun (o,data) {     // 贷款 or 全款
                 var me = this
                 var dataObj = {}
-=======
-            subtabLoanFun (o) {     // 贷款 or 全款
-                var me = this
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
+                var subtabLoan = localStorage.getItem('SUBTABloan');
                 this.subtabShow = o.judge
                 this.totalShow = o.judge
                 //贷款金额   贷款金额=（总价-杂费）X（100%-首付比例）
                 me.loansPayment = parseInt((me.fullPayment - me.incidentalPrice)*(1-me.loanratio))
+                if(subtabLoan && me.loansPayment < 0){
+                    var s = JSON.parse( subtabLoan );
+                    me.loansPayment = s.dataObj.loanmoney
+                }
                 if(this.subtabShow){
-<<<<<<< HEAD
-                    if(data){dataObj = data}else{
+                    if(data){
+                        dataObj = data
+                    }else{
                         dataObj = {
                             'urlcode': me.formValue.urlcode,
                             'id': me.formValue.productid,       //车型id
@@ -490,14 +461,6 @@
                             'loantype': me.loantype,            //还款方式
                             'loanmonths': me.loanmonths,        //还款月数
                         }
-=======
-                    var dataObj = {
-                        'urlcode': me.formValue.urlcode,
-                        'id': me.formValue.productid,       //车型id
-                        'loanmoney': me.loansPayment,       //贷款金额
-                        'loantype': me.loantype,            //还款方式
-                        'loanmonths': me.loanmonths,        //还款月数
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
                     }
                     utils.getLoantotalData(function(res){
                         if( res.status == 200){
@@ -510,9 +473,7 @@
                         }
                     },dataObj);
                 }
-<<<<<<< HEAD
                 // 添加贷款选中参数
-                var subtabLoan = localStorage.getItem('SUBTABloan');
                 try {
                     var o = {}
                     o.dataObj = dataObj;
@@ -524,8 +485,6 @@
                   localStorage.setItem('SUBTABloan',JSON.stringify(o));
                 } catch(e){};
 
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 
                 // 等额本金 本息
                 this.repayDataFun()
@@ -592,7 +551,6 @@
                 this.popupsShow = o.judge
                 // id
                 this.formValue.productid = o.id
-<<<<<<< HEAD
                 this.isVehicle = o.isVehicle
 
                 // 是否挂靠
@@ -608,8 +566,6 @@
                 }else{
                     document.querySelector('.detail-view').style.overflow = 'scroll'
                 }
-=======
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
             },
             backSuperior (o) {      //返回上一级
                 var me = this;
@@ -627,13 +583,8 @@
             formEleOption (o) {    // 获取用户填写内容
                 var me = this
                 me.headstockValue = o.headstock == '' ? 0:o.headstock
-<<<<<<< HEAD
                 me.affiliatedValue = this.isVehicle ? '' : o.affiliated
                 me.formValue.carprice = parseInt(me.headstockValue) + parseInt(o.affiliated == '' ? 0:o.affiliated)
-=======
-                me.affiliatedValue = o.affiliated == '' ? 0:o.affiliated
-                me.formValue.carprice = parseInt(me.headstockValue) + parseInt(me.affiliatedValue)
->>>>>>> bf6277ede4002c3b9b837612565cb7baf188cf1b
 
                 // 按钮颜色
                 if(me.formValue.carprice > 0 && me.formValue.productid != ''){
